@@ -13,9 +13,9 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 
 ## Requisitos
 
-- [VLC Player](https://www.videolan.org/vlc/download-windows.html)
-- [SumatraPDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer.html) (recomendado) o cualquier otro lector PDF
-- [Typora](https://typora.io/#windows) (recomendado) o cualquier otro editor para [Markdown](https://en.wikipedia.org/wiki/Markdown)
+- Descargar e instalar [VLC Player](https://www.videolan.org/vlc/download-windows.html)
+- Descargar e instalar [SumatraPDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer.html) (recomendado) o cualquier otro lector PDF
+- Descargar e instalar [Typora](https://typora.io/#windows) (recomendado) o cualquier otro editor para [Markdown](https://en.wikipedia.org/wiki/Markdown)
 
 ## Cómo iniciar
 
