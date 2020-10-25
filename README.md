@@ -37,5 +37,5 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 ## Recomendaciones
 
 - Usted puede programar la ejecución diaria de este programa con el [Planificador de tareas de Windows](https://es.wikipedia.org/wiki/Planificador_de_tareas_(Windows))
-- VLC se puede configurar para guardar la posición previa en el video
+- Es posible configurar VLC para guardar la posición previa en el video
     ![savevlc](./images/savevlc.png)
