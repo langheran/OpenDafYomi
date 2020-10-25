@@ -50,7 +50,7 @@ for i, d in data
                 if(f0["key"]="url")
                 {
                     if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
-                        Run, % "vlc.exe " f0["value"], C:\Program Files (x86)\VideoLAN\vlc
+                        Run, % "vlc.exe --repeat " f0["value"], C:\Program Files (x86)\VideoLAN\vlc
                     else
                         Run, % f0["value"]
                 }
