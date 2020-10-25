@@ -26,10 +26,12 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 
 | Tecla                     | Función       |
 | ------------------------- | ------------- |
-| `Control+Izquiera`        | Retroceder    |
-| `Control+Derecha`         | Adelantar     |
-| `Control+Espacio`         | Pausar        |
+| `Control+Izquiera`        | Retroceder *  |
+| `Control+Derecha`         | Adelantar *   |
+| `Control+Espacio`         | Pausar *      |
 | `Control+t`               | Transparencia |
 | `Control+a` o `Control+n` | Apuntes       |
 
-Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html).
+*_Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html)_
+
+Usted puede programar la ejecución diaria de este programa con el [Planificador de tareas de Windows](https://es.wikipedia.org/wiki/Planificador_de_tareas_(Windows)).
