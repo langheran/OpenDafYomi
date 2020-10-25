@@ -2,6 +2,7 @@
 #SingleInstance, Force
 #Include JSON.ahk
 #Include Jxon.ahk
+CoordMode, ToolTip,Screen
 
 database=%A_ScriptDir%\cms3926896145652424982.csv
 FileInstall cms3926896145652424982.csv,%database%,1
@@ -56,10 +57,19 @@ for i, d in data
                         FileGetTime, ModifiedTime, %localVideoPath%, M
                         FormatTime, ModifiedDate, %ModifiedTime%, yyyy-MM-dd
                     }
+                    downloaded:=0
                     if(!FileExist(localVideoPath) || ModifiedDate!=Current)
+                    {
+                        downloaded:=1
                         DownloadFile(f0["value"], localVideoPath)
+                    }
                     if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
-                        Run, % "vlc.exe --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                    {
+                        if(downloaded)
+                            Run, % "vlc.exe --start-time=0.0 --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                        else
+                            Run, % "vlc.exe --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                    }
                     else
                         Run, % localVideoPath
                 }
@@ -69,7 +79,7 @@ for i, d in data
 }
 if(FileExist("C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop\AttachVLCToDesktop.exe"))
 {
-    Sleep, 2000
+    Sleep, 3000
     Run, AttachVLCToDesktop.exe, C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop
 }
 
