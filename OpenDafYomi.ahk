@@ -183,6 +183,8 @@ return
 ^t::
 if(!transparency)
 	transparency:=3
+else
+    transparency:=0
 if(transparency)
     WinSet, Transparent, % (255*transparency/5), % "ahk_pid " . PDFPID
 else
