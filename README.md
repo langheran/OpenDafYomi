@@ -6,8 +6,8 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 
 ## Requisitos
 
-- VLC Player
-- SumatraPDF (recomendado) o cualquier otro lector PDF
+- [VLC Player](https://www.videolan.org/vlc/download-windows.html)
+- [SumatraPDF](https://www.sumatrapdfreader.org/download-free-pdf-viewer.html) (recomendado) o cualquier otro lector PDF
 
 ## Cómo iniciar
 
