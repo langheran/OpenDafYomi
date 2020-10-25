@@ -34,4 +34,8 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 
 *_Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html)_
 
-Usted puede programar la ejecución diaria de este programa con el [Planificador de tareas de Windows](https://es.wikipedia.org/wiki/Planificador_de_tareas_(Windows)).
+## Recomendaciones
+
+- Usted puede programar la ejecución diaria de este programa con el [Planificador de tareas de Windows](https://es.wikipedia.org/wiki/Planificador_de_tareas_(Windows))
+- En VLC se puede configurar una bandera para que se guarde la posición previa en el video
+    ![savevlc](./images/savevlc.png)
