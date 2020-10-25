@@ -40,6 +40,7 @@ if(oWhr.Status==200)
     response:=oWhr.ResponseText
 
 data := Jxon_Load(response)
+Clipboard:=response
 
 for i, d in data
 {
@@ -90,7 +91,27 @@ for i, d in data
                 }
             }
         }
+        if(f["key"]="name")
+        {
+            dafName:=f["value"]
+        }
+        if(f["key"]="rabbi")
+        {
+            for k, f0 in f["value"]["fields"]
+            {
+                if(f0["key"]="name")
+                {
+                    rabbiName:=f0["value"]   
+                }
+            }
+        }
     }
+}
+if(PDFPID)
+{
+    newTitle:=dafName . " - " . rabbiName
+    WinWait, ahk_pid %PDFPID%,,3
+    WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
 }
 Sleep, 3000
 WinGet, CtrlList, ControlList, ahk_class Qt5QWindowIcon ahk_pid %VLCPID%
