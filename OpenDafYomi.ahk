@@ -66,7 +66,7 @@ for i, d in data
                     if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
                     {
                         if(downloaded)
-                            Run, % "vlc.exe --start-time=0.0 --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                            Run, % "vlc.exe --start-time 1 --no-start-paused --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
                         else
                             Run, % "vlc.exe --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
                     }
