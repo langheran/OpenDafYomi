@@ -85,14 +85,21 @@ for i, d in data
                     if(!FileExist(localVideoPath) || ModifiedDate!=Current)
                     {
                         downloaded:=1
+                        if(FileExist(localVideoPath))
+                            FileDelete, %localVideoPath%
                         DownloadFile(f0["value"], localVideoPath)
                     }
                     if(FileExist(vlcPath))
                     {
                         if(downloaded)
+                        {
+                            msgbox, aaa
                             Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                        }
                         else
+                        {
                             Run, % """" . vlcPath . """ --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                        }
                     }
                     else
                         Run, % localVideoPath
@@ -108,6 +115,8 @@ for i, d in data
                 {
                     localPDFPath:=A_ScriptDir . "\dafyomi.pdf"
                     pdfUrl:=f0["value"]
+                    if(FileExist(localPDFPath))
+                        FileDelete, %localPDFPath%
                     DownloadFile(f0["value"], localPDFPath)
                     Run, %localPDFPath%,,,PDFPID
                 }
@@ -146,6 +155,9 @@ Loop, Parse, CtrlList, `n
 }
 WorkerW:=PinToDesktop("ahk_exe vlc.exe")
 ControlSend,%VLCVidCtrl%, f, ahk_id %WorkerW%
+
+if(PDFPID)
+    WinActivate, ahk_pid %PDFPID%
 
 OnExit, ExitApplication
 return
@@ -306,6 +318,8 @@ KillChildProcesses(ParentPidOrExe){
 	for Process in Processes
 		If InStr(ParentPID,"," Process.ParentProcessId ","){
 			KillChildProcesses(process.ProcessID)
+            WinClose, % "ahk_pid " process.ProcessID
+            WinWaitClose, % "ahk_pid " process.ProcessID,,5
 			Process,Close,% process.ProcessID 
 		}
 	i--
