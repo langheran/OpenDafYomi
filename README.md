@@ -32,4 +32,4 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 | `Control+t`               | Transparencia |
 | `Control+a` o `Control+n` | Apuntes       |
 
-Para que funcionen los atajos en el video se requiere `VLC`.
+Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html).
