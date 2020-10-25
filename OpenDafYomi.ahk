@@ -1,5 +1,6 @@
 #Persistent
 #SingleInstance, Force
+#WinActivateForce
 #Include JSON.ahk
 #Include Jxon.ahk
 CoordMode, ToolTip,Screen
@@ -66,12 +67,26 @@ for i, d in data
                     if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
                     {
                         if(downloaded)
-                            Run, % "vlc.exe --start-time 1 --no-start-paused --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                            Run, % """C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"" --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
                         else
-                            Run, % "vlc.exe --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
+                            Run, % """C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"" --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
                     }
                     else
                         Run, % localVideoPath
+                }
+            }
+        }
+        if(f["key"]="pdf")
+        {
+            pdfUrl:=""
+            for k, f0 in f["value"]["fields"]
+            {
+                if(f0["key"]="url")
+                {
+                    localPDFPath:=A_ScriptDir . "\dafyomi.pdf"
+                    pdfUrl:=f0["value"]
+                    DownloadFile(f0["value"], localPDFPath)
+                    Run, %localPDFPath%,,,PDFPID
                 }
             }
         }
@@ -80,16 +95,68 @@ for i, d in data
 if(FileExist("C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop\AttachVLCToDesktop.exe"))
 {
     Sleep, 3000
-    Run, AttachVLCToDesktop.exe, C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop
+    WinGet, CtrlList, ControlList, ahk_class Qt5QWindowIcon ahk_pid %VLCPID%
+    Loop, Parse, CtrlList, `n
+    {
+        if (RegExMatch(A_LoopField, "^VLC video output [0-9a-fA-F]{9,}$"))
+        {
+            VLCVidCtrl:=A_LoopField
+        }
+    }
+    WorkerW:=PinToDesktop("ahk_exe vlc.exe")
+    ControlSend,%VLCVidCtrl%, f, ahk_id %WorkerW%
 }
 
 OnExit, ExitApplication
 return
 
+PinToDesktop(title="A", OnTop=0)
+{
+	; Obtain Program Manager Handle
+	Progman := DllCall("FindWindowW", "Str", "Progman", "UPtr", 0, "Ptr")
+
+	; Send Message to Program Manager
+	; Post-Creator's Update Windows 10. WM_SPAWN_WORKER = 0x052C
+	DllCall("SendMessage", "ptr", WinExist("ahk_class Progman"), "uint", 0x052C, "ptr", 0x0000000D, "ptr", 0)
+	DllCall("SendMessage", "ptr", WinExist("ahk_class Progman"), "uint", 0x052C, "ptr", 0x0000000D, "ptr", 1)
+	; Obtain Handle to Newly Created Window
+	WinGet List, List, ahk_class WorkerW
+	Loop % List
+	{
+		If (Found)
+		{
+			WorkerW := List%A_Index%
+			Break
+		}
+		If (DllCall("FindWindowExW", "Ptr", List%A_Index%, "Ptr", 0, "Str", "SHELLDLL_DefView", "UPtr", 0, "Ptr"))
+			Found := TRUE
+	}
+	DllCall("SetParent", "Ptr", WinExist(title), "Ptr", WorkerW, "Ptr")
+    return WorkerW
+}
+
+#If (WinActive("ahk_pid " . PDFPID))
+
+^Left::
+ControlSend,%VLCVidCtrl%, {Left}, ahk_id %WorkerW%
+return
+
+^Right::
+ControlSend,%VLCVidCtrl%, {Right}, ahk_id %WorkerW%
+return
+
+#If
+
 ExitApplication:
 KillChildProcesses("OpenDafYomi.exe")
 ExitApp
 return
+
+isDafYomiPDF()
+{
+    global PDFPID
+    return WinActive("ahk_id " PDFPID)
+}
 
 isInvalidFileName(_fileName, _isLong=true)
 {
