@@ -49,10 +49,19 @@ for i, d in data
             {
                 if(f0["key"]="url")
                 {
+                    localVideoPath:=A_ScriptDir . "\dafyomi.mp4"
+                    ModifiedDate:=0
+                    if(FileExist(localVideoPath))
+                    {
+                        FileGetTime, ModifiedTime, %localVideoPath%, M
+                        FormatTime, ModifiedDate, %ModifiedTime%, yyyy-MM-dd
+                    }
+                    if(!FileExist(localVideoPath) || ModifiedDate!=Current)
+                        DownloadFile(f0["value"], localVideoPath)
                     if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
-                        Run, % "vlc.exe --repeat " f0["value"], C:\Program Files (x86)\VideoLAN\vlc
+                        Run, % "vlc.exe --repeat " localVideoPath, C:\Program Files (x86)\VideoLAN\vlc
                     else
-                        Run, % f0["value"]
+                        Run, % localVideoPath
                 }
             }
         }
@@ -60,7 +69,7 @@ for i, d in data
 }
 if(FileExist("C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop\AttachVLCToDesktop.exe"))
 {
-    Sleep, 5000
+    Sleep, 2000
     Run, AttachVLCToDesktop.exe, C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop
 }
 
@@ -71,6 +80,56 @@ ExitApplication:
 KillChildProcesses("OpenDafYomi.exe")
 ExitApp
 return
+
+isInvalidFileName(_fileName, _isLong=true)
+{
+    forbiddenChars := _isLong ? "[<>|""\\/:*?]" : "[;=+<>|""\]\[\\/']"
+    ErrorLevel := RegExMatch( _fileName , forbiddenChars )
+    Return ErrorLevel
+}
+
+cleanFileName(_fileName, replace="-", _isLong=true)
+{
+    forbiddenChars := _isLong ? "[<>|""\\/:*?]" : "[;=+<>|""\]\[\\/']"
+    _fileName := RegExReplace( _fileName , forbiddenChars, replace)
+    Return _fileName
+}
+
+DownloadFile(UrlToFile, SaveFileAs){
+    SplitPath, SaveFileAs, name, dir, ext, name_no_ext, drive
+	if(isInvalidFileName(name))
+	{
+		name:=cleanFileName(name)
+		SaveFileAs:=dir . "\" . name
+	}
+    ToolTip, Downloading file "%name%",0,0
+	VarSetCapacity(WinHttpObj,10240000)
+	VarSetCapacity(ADODBObj,10240000)
+	Overwrite := False
+	If (FileExist(SaveFileAs)) {
+		If (Overwrite)
+			FileDelete, %SaveFileAs%
+		Else
+		{
+			Tooltip
+			Return
+		}
+	}
+	WinHttpObj := ComObjCreate("WinHttp.WinHttpRequest.5.1")
+	WinHttpObj.Open("GET", UrlToFile)
+	WinHttpObj.Send()
+	ADODBObj := ComObjCreate("ADODB.Stream")
+	ADODBObj.Type := 1
+	ADODBObj.Open()
+	ADODBObj.Write(WinHttpObj.ResponseBody)
+	ADODBObj.SaveToFile(SaveFileAs, Overwrite ? 2:1)
+	ADODBObj.Close()
+	WinHttpObj := ""
+	VarSetCapacity(WinHttpObj,0)
+	ADODBObj := ""
+	VarSetCapacity(ADODBObj,0)
+    ToolTip
+}
 
 KillChildProcesses(ParentPidOrExe){
 	static Processes, i
