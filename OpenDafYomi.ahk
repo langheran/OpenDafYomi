@@ -46,11 +46,17 @@ for i, d in data
             {
                 if(f0["key"]="url")
                 {
-                    Run, % "vlc " f0["value"]
+                    if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
+                        Run, % "vlc " f0["value"]
+                    else
+                        Run, % f0["value"]
                 }
             }
         }
     }
 }
-Sleep, 5000
-Run, AttachVLCToDesktop.exe, C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop
+if(FileExist("C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop\AttachVLCToDesktop.exe"))
+{
+    Sleep, 5000
+    Run, AttachVLCToDesktop.exe, C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop
+}
