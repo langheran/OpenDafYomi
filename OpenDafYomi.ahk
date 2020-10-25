@@ -193,6 +193,8 @@ cleanFileName(_fileName, replace="-", _isLong=true)
 }
 
 DownloadFile(UrlToFile, SaveFileAs){
+    try
+    {
     SplitPath, SaveFileAs, name, dir, ext, name_no_ext, drive
 	if(isInvalidFileName(name))
 	{
@@ -226,6 +228,12 @@ DownloadFile(UrlToFile, SaveFileAs){
 	ADODBObj := ""
 	VarSetCapacity(ADODBObj,0)
     ToolTip
+    }
+    catch
+    {
+        msgbox, Could not contact Jabrutouch server, the application will now exit.
+        ExitApp
+    }
 }
 
 KillChildProcesses(ParentPidOrExe){
