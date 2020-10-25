@@ -8,3 +8,8 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia)
 
 - VLC Player
 - SumatraPDF (recomendado) o cualquier otro lector PDF
+
+## Cómo iniciar
+
+1. Descargar `OpenDafYomi.exe`
+2. Ejecutar `OpenDafYomi.exe`
