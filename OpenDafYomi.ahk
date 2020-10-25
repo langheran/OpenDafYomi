@@ -11,6 +11,16 @@ Menu, Tray, Add, &Salir, ExitApplication
 database=%A_ScriptDir%\cms3926896145652424982.csv
 FileInstall cms3926896145652424982.csv,%database%,1
 
+vlcPath:=0
+
+pf64 := StrReplace(A_ProgramFiles, " (x86)","")
+pf32 := pf64 . " (x86)"
+
+if(FileExist(pf32 . "\VideoLAN\VLC\vlc.exe"))
+    vlcPath:=pf32 . "\VideoLAN\VLC\vlc.exe"
+if(FileExist(pf64 . "\VideoLAN\VLC\vlc.exe"))
+    vlcPath:=pf64 . "\VideoLAN\VLC\vlc.exe"
+
 Current:=A_YYYY "-" A_MM "-" A_DD
 found:=0
 Loop, Read, %database%
@@ -77,12 +87,12 @@ for i, d in data
                         downloaded:=1
                         DownloadFile(f0["value"], localVideoPath)
                     }
-                    if(FileExist("C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"))
+                    if(FileExist(vlcPath))
                     {
                         if(downloaded)
-                            Run, % """C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"" --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
                         else
-                            Run, % """C:\Program Files (x86)\VideoLAN\VLC\vlc.exe"" --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            Run, % """" . vlcPath . """ --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
                     }
                     else
                         Run, % localVideoPath
