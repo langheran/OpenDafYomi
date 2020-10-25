@@ -92,20 +92,17 @@ for i, d in data
         }
     }
 }
-if(FileExist("C:\Users\langh\Utilities\Autohotkey\AttachVLCToDesktop\AttachVLCToDesktop.exe"))
+Sleep, 3000
+WinGet, CtrlList, ControlList, ahk_class Qt5QWindowIcon ahk_pid %VLCPID%
+Loop, Parse, CtrlList, `n
 {
-    Sleep, 3000
-    WinGet, CtrlList, ControlList, ahk_class Qt5QWindowIcon ahk_pid %VLCPID%
-    Loop, Parse, CtrlList, `n
+    if (RegExMatch(A_LoopField, "^VLC video output [0-9a-fA-F]{9,}$"))
     {
-        if (RegExMatch(A_LoopField, "^VLC video output [0-9a-fA-F]{9,}$"))
-        {
-            VLCVidCtrl:=A_LoopField
-        }
+        VLCVidCtrl:=A_LoopField
     }
-    WorkerW:=PinToDesktop("ahk_exe vlc.exe")
-    ControlSend,%VLCVidCtrl%, f, ahk_id %WorkerW%
 }
+WorkerW:=PinToDesktop("ahk_exe vlc.exe")
+ControlSend,%VLCVidCtrl%, f, ahk_id %WorkerW%
 
 OnExit, ExitApplication
 return
@@ -131,6 +128,7 @@ PinToDesktop(title="A", OnTop=0)
 		If (DllCall("FindWindowExW", "Ptr", List%A_Index%, "Ptr", 0, "Str", "SHELLDLL_DefView", "UPtr", 0, "Ptr"))
 			Found := TRUE
 	}
+    WinShow, ahk_id %WorkerW%
 	DllCall("SetParent", "Ptr", WinExist(title), "Ptr", WorkerW, "Ptr")
     return WorkerW
 }
@@ -148,6 +146,7 @@ return
 #If
 
 ExitApplication:
+WinHide, ahk_id %WorkerW%
 KillChildProcesses("OpenDafYomi.exe")
 ExitApp
 return
