@@ -5,6 +5,9 @@
 #Include Jxon.ahk
 CoordMode, ToolTip,Screen
 
+Menu, Tray, NoStandard
+Menu, Tray, Add, &Salir, ExitApplication
+
 database=%A_ScriptDir%\cms3926896145652424982.csv
 FileInstall cms3926896145652424982.csv,%database%,1
 
@@ -30,6 +33,9 @@ Loop, Read, %database%
     if(found)
         break
 }
+
+try
+{
 oWhr := ComObjCreate("WinHttp.WinHttpRequest.5.1")
 oWhr.SetTimeouts("600000", "600000", "600000", "600000")
 oWhr.Open("GET", "https://api.jabrutouch.com/api/delivery/spaces/1/entries?language=es&contentType=lesson&number=" VideoID, false)
@@ -38,6 +44,12 @@ oWhr.SetRequestHeader("Content-Type", "application/json")
 oWhr.Send(payload)
 if(oWhr.Status==200)
     response:=oWhr.ResponseText
+}
+catch
+{
+    msgbox, Could not contact Jabrutouch server, the application will now exit.
+    ExitApp
+}
 
 data := Jxon_Load(response)
 Clipboard:=response
@@ -231,7 +243,7 @@ DownloadFile(UrlToFile, SaveFileAs){
     }
     catch
     {
-        msgbox, Could not contact Jabrutouch server, the application will now exit.
+        msgbox, Could not download files from Jabrutouch server, the application will now exit.
         ExitApp
     }
 }
