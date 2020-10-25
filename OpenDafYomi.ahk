@@ -93,7 +93,6 @@ for i, d in data
                     {
                         if(downloaded)
                         {
-                            msgbox, aaa
                             Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
                         }
                         else
@@ -114,10 +113,21 @@ for i, d in data
                 if(f0["key"]="url")
                 {
                     localPDFPath:=A_ScriptDir . "\dafyomi.pdf"
-                    pdfUrl:=f0["value"]
+                    ModifiedDate:=0
                     if(FileExist(localPDFPath))
-                        FileDelete, %localPDFPath%
-                    DownloadFile(f0["value"], localPDFPath)
+                    {
+                        FileGetTime, ModifiedTime, %localPDFPath%, M
+                        FormatTime, ModifiedDate, %ModifiedTime%, yyyy-MM-dd
+                    }
+                    pdfDownloaded:=0
+                    if(!FileExist(localPDFPath) || ModifiedDate!=Current)
+                    {
+                        pdfDownloaded:=1
+                        pdfUrl:=f0["value"]
+                        if(FileExist(localPDFPath))
+                            FileDelete, %localPDFPath%
+                        DownloadFile(f0["value"], localPDFPath)
+                    }
                     Run, %localPDFPath%,,,PDFPID
                 }
             }
