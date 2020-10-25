@@ -166,7 +166,7 @@ PinToDesktop(title="A", OnTop=0)
     return WorkerW
 }
 
-#If (WinActive("ahk_pid " . PDFPID))
+#If (WinActive("ahk_pid " . PDFPID) && VLCVidCtrl)
 
 ^Left::
 ControlSend,%VLCVidCtrl%, {Left}, ahk_id %WorkerW%
@@ -174,6 +174,40 @@ return
 
 ^Right::
 ControlSend,%VLCVidCtrl%, {Right}, ahk_id %WorkerW%
+return
+
+^Space::
+ControlSend,%VLCVidCtrl%, {Space}, ahk_id %WorkerW%
+return
+
+^t::
+if(!transparency)
+	transparency:=3
+if(transparency)
+    WinSet, Transparent, % (255*transparency/5), % "ahk_pid " . PDFPID
+else
+    WinSet, Transparent, Off, % "ahk_pid " . PDFPID
+return
+
+^a::
+^n::
+    apuntesFolder:=A_ScriptDir . "\apuntes"
+    if(!FileExist(apuntesFolder))
+        FileCreateDir, %apuntesFolder%
+    filePath:=apuntesFolder . "\" . dafName . ".md"
+    if(!FileExist(filePath))
+    {
+        contents=
+(
+# %dafName%
+_%rabbiName%_
+
+
+
+)
+        FileAppend, %contents%, %filePath%
+    }
+    Run, %filePath%
 return
 
 #If
