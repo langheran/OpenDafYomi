@@ -93,11 +93,11 @@ for i, d in data
                     {
                         if(downloaded)
                         {
-                            Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat --no-play-and-pause dafyomi.mp4", %A_ScriptDir%,,VLCPID
                         }
                         else
                         {
-                            Run, % """" . vlcPath . """ --repeat dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            Run, % """" . vlcPath . """ --repeat --no-play-and-pause dafyomi.mp4", %A_ScriptDir%,,VLCPID
                         }
                     }
                     else
