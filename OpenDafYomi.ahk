@@ -1,3 +1,7 @@
+;@Ahk2Exe-AddResource images/close.ico, 10
+;@Ahk2Exe-AddResource images/reload.ico, 20
+;@Ahk2Exe-AddResource images/pdf.ico, 30
+
 #Persistent
 #SingleInstance, Force
 #WinActivateForce
@@ -7,7 +11,16 @@ CoordMode, ToolTip,Screen
 
 SplitPath, A_ScriptFullPath,,,, A_ScriptNameNoExtension
 Menu, Tray, NoStandard
+Menu, Tray, Add, &Abrir PDF, OpenPDF
+Menu, Tray, Add
+Menu, Tray, Add, &Recargar, ReloadApplication
 Menu, Tray, Add, &Salir, ExitApplication
+If (A_IsCompiled)
+{
+    Menu, Tray, Icon, &Salir, %A_ScriptFullPath%, -10
+    Menu, Tray, Icon, &Recargar, %A_ScriptFullPath%, -20
+    Menu, Tray, Icon, &Abrir PDF, %A_ScriptFullPath%, -30
+}
 
 database=%A_ScriptDir%\cms3926896145652424982.csv
 FileInstall cms3926896145652424982.csv,%database%,1
@@ -62,7 +75,7 @@ if(oWhr.Status==200)
 }
 catch
 {
-    msgbox, Could not contact Jabrutouch server, the application will now exit.
+    msgbox, No se pudo contactar el servidor de Jabrutouch, se cerrará el programa ahora.
     ExitApp
 }
 
@@ -196,6 +209,25 @@ if(PDFPID)
 OnExit, ExitApplication
 return
 
+OpenPDF:
+if(localPDFPath)
+{
+    if(WinExist("ahk_pid " . PDFPID))
+        WinActivate, ahk_pid %PDFPID%
+    else
+    {
+        Run, %localPDFPath%,,,PDFPID
+        newTitle:=dafName . " - " . rabbiName
+        WinWait, ahk_pid %PDFPID%,,3
+        WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
+    }
+}
+else
+{
+    msgbox, No se pudo descargar el PDF.
+}
+return
+
 PinToDesktop(title="A", OnTop=0)
 {
 	; Obtain Program Manager Handle
@@ -269,6 +301,10 @@ _%rabbiName%_
 return
 
 #If
+
+ReloadApplication:
+Reload
+return
 
 ExitApplication:
 WinHide, ahk_id %WorkerW%
