@@ -5,6 +5,7 @@
 #Include Jxon.ahk
 CoordMode, ToolTip,Screen
 
+SplitPath, A_ScriptFullPath,,,, A_ScriptNameNoExtension
 Menu, Tray, NoStandard
 Menu, Tray, Add, &Salir, ExitApplication
 
@@ -74,34 +75,53 @@ for i, d in data
             {
                 if(f0["key"]="url")
                 {
-                    localVideoPath:=A_ScriptDir . "\dafyomi.mp4"
-                    ModifiedDate:=0
-                    if(FileExist(localVideoPath))
+                    downloadVideoFile:=0
+                    IniRead, downloadVideoFile, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, Settings, DownloadVideoFile, %downloadVideoFile%
+                    IniWrite, %downloadVideoFile%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, Settings, DownloadVideoFile
+                    if(downloadVideoFile)
                     {
-                        FileGetTime, ModifiedTime, %localVideoPath%, M
-                        FormatTime, ModifiedDate, %ModifiedTime%, yyyy-MM-dd
-                    }
-                    downloaded:=0
-                    if(!FileExist(localVideoPath) || ModifiedDate!=Current)
-                    {
-                        downloaded:=1
+                        localVideoPath:=A_ScriptDir . "\dafyomi.mp4"
+                        ModifiedDate:=0
                         if(FileExist(localVideoPath))
-                            FileDelete, %localVideoPath%
-                        DownloadFile(f0["value"], localVideoPath)
-                    }
-                    if(FileExist(vlcPath))
-                    {
-                        if(downloaded)
                         {
-                            Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat --no-play-and-pause --rate=1.25 dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            FileGetTime, ModifiedTime, %localVideoPath%, M
+                            FormatTime, ModifiedDate, %ModifiedTime%, yyyy-MM-dd
+                        }
+                        downloaded:=0
+                        if(!FileExist(localVideoPath) || ModifiedDate!=Current)
+                        {
+                            downloaded:=1
+                            if(FileExist(localVideoPath))
+                                FileDelete, %localVideoPath%
+                            DownloadFile(f0["value"], localVideoPath)
+                        }
+                        if(FileExist(vlcPath))
+                        {
+                            if(downloaded)
+                            {
+                                Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat --no-play-and-pause --rate=1.25 dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            }
+                            else
+                            {
+                                Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=1.25 dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                            }
+                            WinWait, ahk_pid %VLCPID%,,3
                         }
                         else
-                        {
-                            Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=1.25 dafyomi.mp4", %A_ScriptDir%,,VLCPID
-                        }
+                            Run, % localVideoPath
                     }
                     else
-                        Run, % localVideoPath
+                    {
+                        localVideoPath:=f0["value"]
+                        if(FileExist(vlcPath))
+                        {
+                            Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=1.25 """ . localVideoPath . """", %A_ScriptDir%,,VLCPID
+                            WinWait, ahk_pid %VLCPID%,,3
+                            Sleep, 3000
+                        }
+                        else
+                            Run, % localVideoPath
+                    }
                 }
             }
         }
@@ -128,7 +148,6 @@ for i, d in data
                             FileDelete, %localPDFPath%
                         DownloadFile(f0["value"], localPDFPath)
                     }
-                    Run, %localPDFPath%,,,PDFPID
                 }
             }
         }
@@ -148,8 +167,9 @@ for i, d in data
         }
     }
 }
-if(PDFPID)
+if(localPDFPath)
 {
+    Run, %localPDFPath%,,,PDFPID
     newTitle:=dafName . " - " . rabbiName
     WinWait, ahk_pid %PDFPID%,,3
     WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
