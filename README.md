@@ -21,7 +21,8 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia).
 
 1. Descargar `OpenDafYomi.exe`
 2. Ejecutar `OpenDafYomi.exe`
-3. Si usted quiere unicamente abrir la página del Daf Yomi directo en la aplicación de Jabrutouch, agrege el parámetro `/web`, por ejemplo, puede hacer un acceso directo en su escritorio a `OpenDafYomi.exe /web`. Esto evitara que el video y pdf se abran de forma local y solo se abra en la página de Jabrutouch.
+3. Si usted quiere unicamente abrir la página del Daf Yomi directo en la aplicación Web de Jabrutouch, agrege el parámetro `/web`, por ejemplo, puede hacer un acceso directo en su escritorio a `OpenDafYomi.exe /web`. Esto evitara que el video y pdf se abran de forma local y solo se abra en la página de Jabrutouch.
+   1. También puede usar el menú del icono en la bandeja de tareas de Windows, para abrir el Daf en la Web de Jabrutouch.
 
 ## Atajos del teclado en el PDF
 
