@@ -1,6 +1,6 @@
 # Daf Yomi - Jabrutouch
 
-Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia). _Véase los términos y condiciones del contenido gratuito de Jabrutouch en [Términos y condiciones](https://www.jabrutouch.com/terminos-y-condiciones)._
+Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia). _Véase los términos y condiciones del contenido de Jabrutouch en [Términos y condiciones](https://www.jabrutouch.com/terminos-y-condiciones)._
 - PDF con el Daf
 - Video con la explicación del Jajam
 
