@@ -134,7 +134,7 @@ for i, d in data
                         {
                             Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=" . speedVLC . " """ . localVideoPath . """", %A_ScriptDir%,,VLCPID
                             WinWait, ahk_pid %VLCPID%,,3
-                            Sleep, 3000
+                            Sleep, 10000
                         }
                         else
                             Run, % localVideoPath
