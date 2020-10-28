@@ -1,25 +1,36 @@
-;@Ahk2Exe-AddResource images/close.ico, 10
-;@Ahk2Exe-AddResource images/reload.ico, 20
-;@Ahk2Exe-AddResource images/pdf.ico, 30
+;@Ahk2Exe-AddResource OpenDafYomi.ico, 5
+;@Ahk2Exe-AddResource images/close.ico, 15
+;@Ahk2Exe-AddResource images/reload.ico, 25
+;@Ahk2Exe-AddResource images/pdf.ico, 35
 
 #Persistent
 #SingleInstance, Force
 #WinActivateForce
 #Include JSON.ahk
 #Include Jxon.ahk
+#Include GetSwitchParams.ahk
+
+global OpenWebOnly:=0
+If (GetSwitchParams("web"))
+{
+	OpenWebOnly:=1
+}
+
 CoordMode, ToolTip,Screen
 
 SplitPath, A_ScriptFullPath,,,, A_ScriptNameNoExtension
 Menu, Tray, NoStandard
 Menu, Tray, Add, &Abrir PDF, OpenPDF
+Menu, Tray, Add, &Abrir en Jabrutouch, OpenWeb
 Menu, Tray, Add
 Menu, Tray, Add, &Recargar, ReloadApplication
 Menu, Tray, Add, &Salir, ExitApplication
 If (A_IsCompiled)
 {
-    Menu, Tray, Icon, &Salir, %A_ScriptFullPath%, -10
-    Menu, Tray, Icon, &Recargar, %A_ScriptFullPath%, -20
-    Menu, Tray, Icon, &Abrir PDF, %A_ScriptFullPath%, -30
+    Menu, Tray, Icon, &Salir, %A_ScriptFullPath%, -15
+    Menu, Tray, Icon, &Recargar, %A_ScriptFullPath%, -25
+    Menu, Tray, Icon, &Abrir PDF, %A_ScriptFullPath%, -35
+    Menu, Tray, Icon, &Abrir en Jabrutouch, %A_ScriptFullPath%, -5
 }
 
 database=%A_ScriptDir%\cms3926896145652424982.csv
@@ -80,10 +91,15 @@ catch
 }
 
 data := Jxon_Load(response)
-Clipboard:=response
 
 for i, d in data
 {
+    VideoIDLong := d["id"]
+    if(OpenWebOnly)
+    {
+        GoSub, OpenWeb
+        ExitApp
+    }
     for j, f in d["fields"]
     {
         if(f["key"]="video")
@@ -226,6 +242,10 @@ else
 {
     msgbox, No se pudo descargar el PDF.
 }
+return
+
+OpenWeb:
+    Run, https://www.jabrutouch.com/lesson/%VideoIDLong%
 return
 
 PinToDesktop(title="A", OnTop=0)

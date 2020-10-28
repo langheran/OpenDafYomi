@@ -1,0 +1,1 @@
+OpenDafYomi.exe /web
