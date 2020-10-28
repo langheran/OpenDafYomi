@@ -245,7 +245,7 @@ else
 return
 
 OpenWeb:
-    Run, https://www.jabrutouch.com/lesson/%VideoIDLong%
+    Run, https://www.jabrutouch.com/lesson/%VideoIDLong%, %A_ScriptDir%,,WEBPID
 return
 
 PinToDesktop(title="A", OnTop=0)
@@ -397,6 +397,7 @@ DownloadFile(UrlToFile, SaveFileAs){
 }
 
 KillChildProcesses(ParentPidOrExe){
+    global WEBPID
 	static Processes, i
 	ParentPID:=","
 	If !(Processes)
@@ -407,6 +408,8 @@ KillChildProcesses(ParentPidOrExe){
 			ParentPID.=process.ProcessID ","
 	for Process in Processes
 		If InStr(ParentPID,"," Process.ParentProcessId ","){
+            If(WEBPID==process.ProcessID)
+                continue
 			KillChildProcesses(process.ProcessID)
             WinClose, % "ahk_pid " process.ProcessID
             WinWaitClose, % "ahk_pid " process.ProcessID,,5
