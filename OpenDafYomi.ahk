@@ -2,6 +2,7 @@
 ;@Ahk2Exe-AddResource images/close.ico, 15
 ;@Ahk2Exe-AddResource images/reload.ico, 25
 ;@Ahk2Exe-AddResource images/pdf.ico, 35
+;@Ahk2Exe-AddResource images/crown.ico, 45
 
 #Persistent
 #SingleInstance, Force
@@ -32,7 +33,7 @@ If (A_IsCompiled)
     Menu, Tray, Icon, &Recargar, %A_ScriptFullPath%, -25
     Menu, Tray, Icon, &Abrir PDF, %A_ScriptFullPath%, -35
     Menu, Tray, Icon, &Abrir en Jabrutouch, %A_ScriptFullPath%, -5
-    Menu, Tray, Icon, &Donar a Jabrutouch, %A_ScriptFullPath%, -5
+    Menu, Tray, Icon, &Donar a Jabrutouch, %A_ScriptFullPath%, -45
 }
 
 database=%A_ScriptDir%\cms3926896145652424982.csv
