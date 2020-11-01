@@ -26,13 +26,14 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia).
 
 ## Atajos del teclado en el PDF
 
-| Tecla                     | Función       |
-| ------------------------- | ------------- |
-| `Control+Izquiera`        | Retroceder *  |
-| `Control+Derecha`         | Adelantar *   |
-| `Control+Espacio`         | Pausar *      |
-| `Control+t`               | Transparencia |
-| `Control+a` o `Control+n` | Apuntes       |
+| Tecla                     | Función         |
+| ------------------------- | --------------- |
+| `Control+Izquiera`        | Retroceder *    |
+| `Control+Derecha`         | Adelantar *     |
+| `Control+Espacio`         | Pausar *        |
+| `Control+t`               | Transparencia   |
+| `Control+a` o `Control+n` | Apuntes         |
+| `d` o `k`                 | Donar Ketarim 👑 |
 
 *_Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html)_
 

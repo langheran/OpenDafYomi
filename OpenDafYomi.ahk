@@ -314,6 +314,11 @@ else
     WinSet, Transparent, Off, % "ahk_pid " . PDFPID
 return
 
+d::
+k::
+GoSub, DonateWeb
+return
+
 ^a::
 ^n::
     apuntesFolder:=A_ScriptDir . "\apuntes"
