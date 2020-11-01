@@ -314,7 +314,7 @@ else
     WinSet, Transparent, Off, % "ahk_pid " . PDFPID
 return
 
-d::
+r::
 k::
 GoSub, DonateWeb
 return
