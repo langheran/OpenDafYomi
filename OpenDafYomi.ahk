@@ -101,6 +101,12 @@ catch
     ExitApp
 }
 
+if(FileExist("payload.json"))
+{
+    FileDelete, payload.json
+    FileAppend, response, payload.json
+}
+
 data := Jxon_Load(response)
 
 for i, d in data
