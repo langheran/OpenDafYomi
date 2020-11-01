@@ -23,7 +23,7 @@ SplitPath, A_ScriptFullPath,,,, A_ScriptNameNoExtension
 Menu, Tray, NoStandard
 Menu, Tray, Add, &Abrir PDF, OpenPDF
 Menu, Tray, Add, &Abrir en Jabrutouch, OpenWeb
-Menu, Tray, Add, &Donar a Jabrutouch, DonateWeb
+Menu, Tray, Add, &Regalar Ketarim 👑, DonateWeb
 Menu, Tray, Add
 Menu, Tray, Add, &Recargar, ReloadApplication
 Menu, Tray, Add, &Salir, ExitApplication
@@ -33,7 +33,7 @@ If (A_IsCompiled)
     Menu, Tray, Icon, &Recargar, %A_ScriptFullPath%, -25
     Menu, Tray, Icon, &Abrir PDF, %A_ScriptFullPath%, -35
     Menu, Tray, Icon, &Abrir en Jabrutouch, %A_ScriptFullPath%, -5
-    Menu, Tray, Icon, &Donar a Jabrutouch, %A_ScriptFullPath%, -45
+    Menu, Tray, Icon, &Regalar Ketarim 👑, %A_ScriptFullPath%, -45
 }
 
 database=%A_ScriptDir%\cms3926896145652424982.csv

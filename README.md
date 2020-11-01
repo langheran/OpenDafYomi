@@ -1,6 +1,6 @@
 # Daf Yomi - Jabrutouch
 
-Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia). _Véase los términos y condiciones del contenido de Jabrutouch en [Términos y condiciones](https://www.jabrutouch.com/terminos-y-condiciones). Si usted quiere donar ketarim 👑 a Jabrutouch puede hacerlo en su [página Web](https://www.jabrutouch.com/regala)_
+Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia). _Véase los términos y condiciones del contenido de Jabrutouch en [Términos y condiciones](https://www.jabrutouch.com/terminos-y-condiciones). Si usted quiere regalar ketarim 👑 a Jabrutouch puede hacerlo en su [página Web](https://www.jabrutouch.com/regala)_
 - PDF con el Daf
 - Video con la explicación del Jajam
 
@@ -33,7 +33,7 @@ Abre Daf Yomi de la página de [Jabrutouch](https://www.jabrutouch.com/estudia).
 | `Control+Espacio`         | Pausar *        |
 | `Control+t`               | Transparencia   |
 | `Control+a` o `Control+n` | Apuntes         |
-| `d` o `k`                 | Donar Ketarim 👑 |
+| `r` o `k`                 | Regalar Ketarim 👑 |
 
 *_Para que funcionen los atajos en el video se requiere [VLC Player](https://www.videolan.org/vlc/download-windows.html)_
 
