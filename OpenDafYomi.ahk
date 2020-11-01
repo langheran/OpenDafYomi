@@ -332,7 +332,7 @@ _%rabbiName%_
 )
         FileAppend, %contents%, %filePath%
     }
-    Run, %filePath%
+    Run, %filePath%, %apuntesFolder%,,MDPID
 return
 
 #If
@@ -413,6 +413,7 @@ DownloadFile(UrlToFile, SaveFileAs){
 
 KillChildProcesses(ParentPidOrExe){
     global WEBPID
+    global MDPID
 	static Processes, i
 	ParentPID:=","
 	If !(Processes)
@@ -423,7 +424,7 @@ KillChildProcesses(ParentPidOrExe){
 			ParentPID.=process.ProcessID ","
 	for Process in Processes
 		If InStr(ParentPID,"," Process.ParentProcessId ","){
-            If(WEBPID==process.ProcessID)
+            If(WEBPID==process.ProcessID || MDPID==process.ProcessID)
                 continue
 			KillChildProcesses(process.ProcessID)
             WinClose, % "ahk_pid " process.ProcessID
