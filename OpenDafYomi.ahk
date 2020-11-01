@@ -101,10 +101,10 @@ catch
     ExitApp
 }
 
-if(FileExist("payload.json"))
+if(FileExist("response.json"))
 {
-    FileDelete, payload.json
-    FileAppend, response, payload.json
+    FileDelete, response.json
+    FileAppend, %response%, response.json
 }
 
 data := Jxon_Load(response)
