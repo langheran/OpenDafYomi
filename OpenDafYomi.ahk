@@ -53,6 +53,14 @@ speedVLC:="1.25"
 IniRead, speedVLC, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, VLC, DefaultSpeed, %speedVLC%
 IniWrite, %speedVLC%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, VLC, DefaultSpeed
 
+volumeVLC:="1.25"
+IniRead, volumeVLC, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, VLC, DefaultVolume, %volumeVLC%
+IniWrite, %volumeVLC%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, VLC, DefaultVolume
+
+; volumeVLC:=100 * 2.56 * volumeVLC
+; volumeVLC:="" . volumeVLC
+; volumeVLC := RegExReplace(volumeVLC, "\.\d*")
+
 Current:=A_YYYY "-" A_MM "-" A_DD
 found:=0
 Loop, Read, %database%
@@ -135,11 +143,11 @@ for i, d in data
                         {
                             if(downloaded)
                             {
-                                Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat --no-play-and-pause --rate=" . speedVLC . " dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                                Run, % """" . vlcPath . """ --start-time 1 --no-start-paused --repeat --no-play-and-pause  --rate=" . speedVLC . " --mmdevice-volume=" . volumeVLC . " --gain=8 dafyomi.mp4", %A_ScriptDir%,,VLCPID
                             }
                             else
                             {
-                                Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=" . speedVLC . " dafyomi.mp4", %A_ScriptDir%,,VLCPID
+                                Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=" . speedVLC . " --mmdevice-volume=" . volumeVLC . " --gain=8  dafyomi.mp4", %A_ScriptDir%,,VLCPID
                             }
                             WinWait, ahk_pid %VLCPID%,,3
                         }
@@ -151,7 +159,7 @@ for i, d in data
                         localVideoPath:=f0["value"]
                         if(FileExist(vlcPath))
                         {
-                            Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=" . speedVLC . " """ . localVideoPath . """", %A_ScriptDir%,,VLCPID
+                            Run, % """" . vlcPath . """ --repeat --no-play-and-pause --rate=" . speedVLC . " --mmdevice-volume=" . volumeVLC . " --gain=8  """ . localVideoPath . """", %A_ScriptDir%,,VLCPID
                             WinWait, ahk_pid %VLCPID%,,3
                             Sleep, 10000
                         }
