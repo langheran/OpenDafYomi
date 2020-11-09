@@ -223,6 +223,10 @@ if(localPDFPath)
     newTitle:=dafName . " - " . rabbiName
     WinWait, ahk_pid %PDFPID%,,3
     WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
+    pdfTransparency:=0
+    IniRead, pdfTransparency, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency, %pdfTransparency%
+    IniWrite, %pdfTransparency%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency
+    GoSub, SetTransparency
 }
 Sleep, 3000
 WinGet, CtrlList, ControlList, ahk_class Qt5QWindowIcon ahk_pid %VLCPID%
@@ -253,6 +257,10 @@ if(localPDFPath)
         newTitle:=dafName . " - " . rabbiName
         WinWait, ahk_pid %PDFPID%,,3
         WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
+        pdfTransparency:=0
+        IniRead, pdfTransparency, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency, %pdfTransparency%
+        IniWrite, %pdfTransparency%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency
+        GoSub, SetTransparency
     }
 }
 else
@@ -310,14 +318,22 @@ ControlSend,%VLCVidCtrl%, {Space}, ahk_id %WorkerW%
 return
 
 ^t::
+ToggleTransparency:
 if(!transparency)
 	transparency:=3
 else
     transparency:=0
+SetTransparency:
+if(pdfTransparency)
+    transparency:=pdfTransparency
+if(!transparency)
+	transparency:=0
 if(transparency)
     WinSet, Transparent, % (255*transparency/5), % "ahk_pid " . PDFPID
 else
     WinSet, Transparent, Off, % "ahk_pid " . PDFPID
+pdfTransparency:=transparency
+IniWrite, %pdfTransparency%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency
 return
 
 r::
