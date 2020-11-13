@@ -222,6 +222,7 @@ if(localPDFPath)
     Run, %localPDFPath%,,,PDFPID
     newTitle:=dafName . " - " . rabbiName
     WinWait, ahk_pid %PDFPID%,,3
+    Sleep, 1000
     WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
     pdfTransparency:=0
     IniRead, pdfTransparency, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency, %pdfTransparency%
@@ -256,6 +257,7 @@ if(localPDFPath)
         Run, %localPDFPath%,,,PDFPID
         newTitle:=dafName . " - " . rabbiName
         WinWait, ahk_pid %PDFPID%,,3
+        Sleep, 1000
         WinSetTitle, ahk_pid %PDFPID%,,%newTitle%
         pdfTransparency:=0
         IniRead, pdfTransparency, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, PDF, PDFTransparency, %pdfTransparency%
