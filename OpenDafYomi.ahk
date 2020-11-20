@@ -315,6 +315,14 @@ return
 ControlSend,%VLCVidCtrl%, {Right}, ahk_id %WorkerW%
 return
 
+^Up::
+ControlSend,%VLCVidCtrl%, ^{Up}, ahk_id %WorkerW%
+return
+
+^Down::
+ControlSend,%VLCVidCtrl%, ^{Down}, ahk_id %WorkerW%
+return
+
 ^Space::
 ControlSend,%VLCVidCtrl%, {Space}, ahk_id %WorkerW%
 return
