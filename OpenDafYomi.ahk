@@ -327,6 +327,10 @@ return
 ControlSend,%VLCVidCtrl%, {Space}, ahk_id %WorkerW%
 return
 
+f::
+ControlSend,%VLCVidCtrl%, f, ahk_id %WorkerW%
+return
+
 ^t::
 ToggleTransparency:
 if(!transparency)
