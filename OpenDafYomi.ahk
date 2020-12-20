@@ -217,7 +217,10 @@ for i, d in data
         }
     }
 }
-if(localPDFPath)
+openPDFFile:=0
+IniRead, openPDFFile, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, Settings, OpenPDFFile, %openPDFFile%
+IniWrite, %openPDFFile%, %A_ScriptDir%\%A_ScriptNameNoExtension%.ini, Settings, OpenPDFFile
+if(localPDFPath && openPDFFile)
 {
     Run, %localPDFPath%,,,PDFPID
     newTitle:=dafName . " - " . rabbiName
