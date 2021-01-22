@@ -11,11 +11,15 @@
 #Include Jxon.ahk
 #Include GetSwitchParams.ahk
 
+OnMessage(0x404, "AHK_NOTIFYICON")
+
 global OpenWebOnly:=0
 If (GetSwitchParams("web"))
 {
 	OpenWebOnly:=1
 }
+
+global CurrentPID:=DllCall("GetCurrentProcessId")
 
 CoordMode, ToolTip,Screen
 
@@ -308,7 +312,7 @@ PinToDesktop(title="A", OnTop=0)
     return WorkerW
 }
 
-#If (WinActive("ahk_pid " . PDFPID) && VLCVidCtrl)
+#If ((WinActive("ahk_pid " . PDFPID) || WinActive("ahk_pid " . CurrentPID)) && VLCVidCtrl)
 
 ^Left::
 ControlSend,%VLCVidCtrl%, {Left}, ahk_id %WorkerW%
@@ -478,4 +482,21 @@ KillChildProcesses(ParentPidOrExe){
 	i--
 	If !i
 		Processes=
+}
+
+ActivateSelf:
+Gui, 1:  -Caption +E0x80000 +LastFound +OwnDialogs +Owner +AlwaysOnTop
+Gui, 1: Show, NA w0 h0 y0 x0
+WinActivate, % "ahk_pid " . DllCall("GetCurrentProcessId")
+return
+
+AHK_NOTIFYICON(wParam, lParam)
+{
+    if (lParam = 0x202) ; WM_LBUTTONUP
+	{
+        if(A_IsSuspended)
+            Suspend
+		GoSub, ActivateSelf
+		Return 1
+	}
 }
